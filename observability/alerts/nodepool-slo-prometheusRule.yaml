@@ -182,7 +182,7 @@ spec:
         max_over_time(
           (
             (
-              (time() - backend_resource_operation_start_time_seconds{resource_type=~".*nodepools", })
+              (time() - backend_resource_operation_start_time_seconds{resource_type=~".*nodepools"})
               and
               backend_resource_operation_phase_info{resource_type=~".*nodepools", phase=~"updating|deleting"} == 1
             ) > 7200
