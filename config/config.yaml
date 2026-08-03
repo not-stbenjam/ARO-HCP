@@ -158,7 +158,7 @@ defaults:
       image:
         registry: mcr.microsoft.com
         repository: oss/v2/fluent/fluent-bit
-        digest: sha256:c81f949228a0d446aea4966d8da39cfcd63f17c69a5eae143ce8264ddddc5777 # v5.0.4 (2026-07-28 19:40)
+        digest: sha256:e8df41b2461b466e5f1d28157f7931f7c68b4b0917258e12de4d7922fd283703 # v5.0.4 (2026-07-31 18:54)
       resources:
         requests:
           cpu: 100m
@@ -174,14 +174,14 @@ defaults:
       image:
         registry: mcr.microsoft.com
         repository: geneva/distroless/mdsd
-        digest: sha256:5c0159feac3312c447b10c840558a5db6591f78c498cf9150e010be9fa860a20 # 1.43.0-20260728-3 (2026-07-28 17:38)
+        digest: sha256:83b9cbd2662c56a6d6858210bfb375e81a5d6bea5462786d5005a473ad2ee657 # 1.43.0-20260730-1 (2026-07-30 17:43)
   # Kube Events
   kubeEvents:
     enabled: true
     image:
       registry: kubernetesshared.azurecr.io
       repository: shared/kube-events
-      digest: sha256:10a020acbc382e490deecdc78ad7945cbd26852f301f7a25f06ac89a3de8d802 # 20260726.1 (2026-07-26 03:24)
+      digest: sha256:dea4ec46b0d97261cedd62ab6235e6aa6002e5aac8fab87b80d41e57f9658f82 # 20260802.1 (2026-08-02 03:25)
     k8s:
       namespace: monitoring
       serviceAccountName: ke-serviceaccount
@@ -367,7 +367,7 @@ defaults:
     image:
       registry: quay.io
       repository: redhat-services-prod/crt-redhat-acm-tenant/hypershift/hypershift-operator
-      digest: sha256:0a0397b7e1fec51b2704e5c9ca131ebc1cb607d1ee9c882fd6205f9b7ca6b724 # 3ce5a9b281bbf76f2b68dc2b850c525b322ab316 (2026-07-29 23:17)
+      digest: sha256:3d479647cb88b77e9f0b0dfd85cc3828a1e195de1b7051963d0ebed0f99c96a8 # deb947936de73ed8695a57b9510c90d8b81e8be1 (2026-08-03 10:15)
     namespace: hypershift
     additionalInstallArg: '--enable-cpo-overrides'
     # By default we set it to empty as this tag is only required for msft environments. We override
@@ -467,15 +467,15 @@ defaults:
     server:
       registry: registry.stage.redhat.io
       repository: oadp/oadp-velero-rhel9
-      digest: sha256:a48979677ab533f849bf8c15eaab148f74857c8f48da945f52f10f029fdb569c # 1.6.1 (2026-07-27 18:10)
+      digest: sha256:a5ccf183b9ec432f251b85ed0c9a5cd84b66cb1dd4c2fd34e0d4a195d6ff65a7 # 1.6.1 (2026-08-03 07:03)
     azurePlugin:
       registry: registry.stage.redhat.io
       repository: oadp/oadp-velero-plugin-for-microsoft-azure-rhel9
-      digest: sha256:c4c26fca6614917e9b2812415e8f912fc45cfe6ea1755efea443670763898e3d # 1.6.1 (2026-07-27 18:00)
+      digest: sha256:e0a7f060dc7662e6b1b34ebce46a67fa90eadddebcebc6a78893250f4a63c927 # 1.6.1 (2026-08-03 07:03)
     hypershiftPlugin:
       registry: registry.stage.redhat.io
       repository: oadp/oadp-hypershift-velero-plugin-rhel9
-      digest: sha256:e072512980311316a92b5cfc9252b7d71fc9e534d8db8a9db2ff1d7004e1524b # 1.6.1 (2026-07-27 18:00)
+      digest: sha256:6ccb8c5fd0185427f6d8f62b1159055e099be5fcd9f591b875c98ba5082b6a71 # 1.6.1 (2026-08-03 07:02)
   # SVC cluster specifics
   svc:
     subscription:
@@ -612,7 +612,7 @@ defaults:
           registry: arohcpsvcdev.azurecr.io
           repository: thanos/thanos
           tag: v0.41.0
-          sha: 6249f7aaadd3695df637fb2eb4cb9a9955611eee691c3970892fe9c0dc3f2db6 # v0.42.2 (2026-07-16 20:22)
+          sha: b567818fe608067eb0f1d7c2c4fe361e7ad83c8a256234c97685f1d0bf670cc8 # v0.42.4 (2026-07-30 13:37)
   # MGMT cluster specifics
   mgmt:
     stamps:
@@ -744,7 +744,7 @@ defaults:
           registry: arohcpsvcdev.azurecr.io
           repository: thanos/thanos
           tag: v0.41.0
-          sha: 6249f7aaadd3695df637fb2eb4cb9a9955611eee691c3970892fe9c0dc3f2db6 # v0.42.2 (2026-07-16 20:22)
+          sha: b567818fe608067eb0f1d7c2c4fe361e7ad83c8a256234c97685f1d0bf670cc8 # v0.42.4 (2026-07-30 13:37)
   # Backend
   backend:
     image:
@@ -992,7 +992,7 @@ defaults:
         image:
           registry: mcr.microsoft.com
           repository: azurelinux/base/nginx
-          digest: sha256:b770cd63558c97c4e19d6f0dbe22b7a636b1eb4d267efe37f1ad44cdaecfddb9 # 1.28.3-8-azl3.0.20260728 (2026-07-29 01:59)
+          digest: sha256:2c0ba08f2ebb48b3938b103cdce87450110a2f8ad76dd6a082d0dcd3e02c289e # 1.28.3-8-azl3.0.20260728 (2026-07-31 23:27)
     eventGrid:
       name: "arohcp-{{ .ctx.environment }}-maestro-{{ .ctx.regionShort }}" # [globally-unique]
       maxClientSessionsPerAuthName: 6
@@ -1025,18 +1025,18 @@ defaults:
       bundle:
         registry: quay.io
         repository: redhat-user-workloads/crt-redhat-acm-tenant/acm-operator-bundle-acm-216
-        digest: sha256:72b7793fba6c2f320616b4c2b8542e6c93fed6793ee51e19e019ba92dd1b2334 # v2.16.3-546 (2026-07-30 05:08)
+        digest: sha256:effb80b78a92c8cd480812bf05b3d035fb56ea99257202fa4eca58b1ef68ef40 # v2.16.3-550 (2026-08-03 13:56)
     mce:
       bundle:
         registry: quay.io
         repository: redhat-user-workloads/crt-redhat-acm-tenant/mce-operator-bundle-mce-211
-        digest: sha256:c8b9aa2f3e0d3db6c11974c2ae820dab5cf3c290f7de8b5115e1839e0a8aab1d # v2.11.4-591 (2026-07-30 05:03)
+        digest: sha256:3ee3769e32a21e4108cb1e0f2263fb6aa696a8bcff2207311a0fbeb59f8da9df # v2.11.5-596 (2026-08-03 14:02)
   # Cluster Service
   clustersService:
     image:
       registry: quay.io
       repository: app-sre/aro-hcp-clusters-service
-      digest: sha256:981637a1e08c3a6c86f3631c6642f6f1412c2e89d306590f72958712f7a9211d # 9b8050b0c3afb0a70d866f38cc912680cc745ba9 (2026-07-29 16:14)
+      digest: sha256:4394f21f23e397728efe03d6e0680d717ce21a9ed4f7be3ea7b2aa042bd64574 # 2b4f2a905a7641ca9bcc02dd74004c493497b531 (2026-07-31 08:16)
     # controls how many HCPs can be placed on an MC, sadly not configurable per MC
     provisionShardClusterLimit: 100
     provisionShardStatus: active
@@ -1098,7 +1098,7 @@ defaults:
       image:
         registry: arohcpsvcdev.azurecr.io
         repository: image-sync/oc-mirror
-        digest: sha256:aa1a693a0d0d990392bc851153352a8d9180a1d9b1e501af22a13234af52a7d3 # cd55650 (2026-07-30 05:18)
+        digest: sha256:5be8977429cb498796eb60ee3e99389185132169eb38fabf30fe2d99b8e342f6 # 0905734 (2026-08-03 13:54)
       pullSecretName: ocmirror-pull-secret
       operatorVersionsToMirror: "4.18,4.19,4.20,4.21,4.22"
   # Automation Account
