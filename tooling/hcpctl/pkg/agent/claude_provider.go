@@ -194,17 +194,7 @@ func (s *ClaudeSession) SendAndWait(ctx context.Context, prompt string) (string,
 
 	// Tool-use loop.
 	for {
-		params := anthropic.MessageNewParams{
-			Model:     s.model,
-			MaxTokens: claudeMaxTokens,
-			System: []anthropic.TextBlockParam{
-				{Text: s.systemPrompt},
-			},
-			Messages: s.messages,
-		}
-		if len(s.tools) > 0 {
-			params.Tools = s.tools
-		}
+		params := s.messageParams()
 
 		s.logger.V(3).Info("Calling Anthropic Messages API.", "messageCount", len(s.messages))
 
@@ -236,6 +226,30 @@ func (s *ClaudeSession) SendAndWait(ctx context.Context, prompt string) (string,
 		// Add tool results as user message and continue the loop.
 		s.messages = append(s.messages, anthropic.NewUserMessage(toolResults...))
 	}
+}
+
+func (s *ClaudeSession) messageParams() anthropic.MessageNewParams {
+	// Anthropic recommends top-level automatic caching for growing multi-turn
+	// conversations. It advances the breakpoint to the last cacheable block,
+	// while cache hits refresh the default five-minute TTL at no extra cost.
+	// See https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+	// and https://platform.claude.com/docs/en/api/go/messages.
+	cacheControl := anthropic.NewCacheControlEphemeralParam()
+	cacheControl.TTL = anthropic.CacheControlEphemeralTTLTTL5m
+
+	params := anthropic.MessageNewParams{
+		Model:        s.model,
+		MaxTokens:    claudeMaxTokens,
+		CacheControl: cacheControl,
+		System: []anthropic.TextBlockParam{
+			{Text: s.systemPrompt},
+		},
+		Messages: s.messages,
+	}
+	if len(s.tools) > 0 {
+		params.Tools = s.tools
+	}
+	return params
 }
 
 // processToolUseBlocks iterates over the response content blocks, identifies

@@ -82,6 +82,22 @@ directory, overridable with `--output`):
 - `conversation.json` — the full conversation history with the agent,
   including all prompts, responses, and tool calls.
 
+### Claude prompt caching
+
+Claude analysis requests use Anthropic's top-level automatic prompt caching
+with a five-minute TTL. This mode advances the cache breakpoint as the
+conversation grows, allowing later validation, tool-use, and review turns to
+reuse the stable tools, system prompt, and message history. Cache hits refresh
+the five-minute lifetime without another cache-write charge.
+
+The setting follows Anthropic's
+[prompt caching guidance](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)
+for multi-turn conversations and the Go SDK's
+[`MessageNewParams.CacheControl`](https://platform.claude.com/docs/en/api/go/messages)
+request option. In the provider response usage, the first eligible request
+should report `cache_creation_input_tokens`, and later requests with the same
+prefix should report `cache_read_input_tokens`.
+
 ## Debugging with conversation.json
 
 When the analysis produces unexpected results or the agent gets stuck in

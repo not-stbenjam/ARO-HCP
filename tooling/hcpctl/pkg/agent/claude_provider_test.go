@@ -215,6 +215,37 @@ func TestBuildToolHandlerMap(t *testing.T) {
 	}
 }
 
+func TestClaudeMessageParamsEnableFiveMinutePromptCaching(t *testing.T) {
+	session := &ClaudeSession{
+		model:        "claude-test",
+		systemPrompt: "system prompt",
+		messages: []anthropic.MessageParam{
+			anthropic.NewUserMessage(anthropic.NewTextBlock("hello")),
+		},
+	}
+
+	params := session.messageParams()
+	if params.CacheControl.TTL != anthropic.CacheControlEphemeralTTLTTL5m {
+		t.Fatalf("CacheControl.TTL = %q, want %q", params.CacheControl.TTL, anthropic.CacheControlEphemeralTTLTTL5m)
+	}
+
+	encoded, err := json.Marshal(params)
+	if err != nil {
+		t.Fatalf("failed to marshal message params: %v", err)
+	}
+	var request map[string]any
+	if err := json.Unmarshal(encoded, &request); err != nil {
+		t.Fatalf("failed to unmarshal message params: %v", err)
+	}
+	cacheControl, ok := request["cache_control"].(map[string]any)
+	if !ok {
+		t.Fatalf("cache_control = %#v, want object", request["cache_control"])
+	}
+	if cacheControl["type"] != "ephemeral" || cacheControl["ttl"] != "5m" {
+		t.Errorf("cache_control = %#v, want type=ephemeral ttl=5m", cacheControl)
+	}
+}
+
 func TestNewClaudeProvider_EmptyAPIKeyFile(t *testing.T) {
 	// Create a temporary file with only whitespace.
 	dir := t.TempDir()
